@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public'))); //정적 리소스들�
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
 
 app.use(express.json()); //본문(body)의 json형식 데이터를 해석(req.body에 해석한 데이터가 들어감)
-app.use(express.urlencoded({extended: false}));//URL형식의 쿼리(e.g. http://...?x=1&y=2)를 json형식으로 변환해서 req.body에 데이터를 추가
+app.use(express.urlencoded({extended: false}));//URL형식의 쿼리(e.g. http://...?x=1&y=2)를 json형식(querystring library)으로 변환해서 req.body에 데이터를 추가, true일 경우 qs library 참조
 app.use(cookieParser(process.env.COOKIE_SECRET));//요청(request)에 동봉된 쿠기를 해석, 해석된 쿠키들은 req.cookies에 추가됨. 입력된 비밀키(1번째 인자)는 클라이언트에서 쿠키를 수정하지 못하도록 방지
 app.use(session({
     resave: false, //세션에 수정사항이 생기지 않아도 세션을 다시 저장하는 옵션을 설정(true: 저장, false: 저장하지 않음)
