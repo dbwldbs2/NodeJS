@@ -8,9 +8,49 @@ html
                 width: 200px;
                 display: inline-block;
             }
+            table {
+                position: relative;
+                left: 30px; 
+                top: 15px;
+                border-left: 4px double;
+                border-collapse: collapse;
+                text-align: center;
+            }
+
+            td {
+                border-top: 1px solid;   
+            }
+            
+        script.
+            function validation() {
+                const chk_domain = document.getElementById('host').value;
+                const chk_radio = document.getElementsByName('type')
+                let sel_type = null;
+                
+                for(let i =0; i<chk_radio.length; i++) {
+                    if(chk_radio[i].checked == true) {
+                        sel_type = chk_radio[i].value;
+                        break;
+                    }
+                }
+
+                if(!sel_type) {
+                    alert('도메인 종류(무료, 프리미엄)를 선택해주세요.');
+                    return;
+                }
+
+                if(!chk_domain) {
+                    alert('도메인 명을 입력해 주세요.');
+                    return;
+                }
+
+                document.getElementById('btn_domain').setAttribute('type', 'submit');
+                
+            }
+
         body
             if user && user.id
-                span.user-name= '안녕하세요' + user.nick + '님'
+                span.user-name= '안녕하세요. ' + user.nick + '님'
                 a(href='/auth/logout'): button 로그아웃
                 fieldset
                     legend 도메인 등록
@@ -19,24 +59,25 @@ html
                             label(for='type-free') 무료
                             input#type-free(type='radio', name='type' value='free')
                             label(for='type-primium') 프리미엄
-                            input#type-primium(type='radio', name='type' value='primium')
+                            input#type-primium(type='radio', name='type' value='premium')
                         div
                             label(for='host') 도메인
                             input#host(name='host' placeholder='ex) naver.com')
-                        button 저장
-                    table
+                            //- button의 기본 type이 submit이기 때문에 별도로 type을 button으로 지정한다.
+                        button#btn_domain(type='button' onclick= "validation()") 저장
+                table
+                    tr
+                        th 도메인 주소
+                        th 타입
+                        th 클라이언트 비밀키
+                    for domain in user.domains
                         tr
-                            th 도메인 주소
-                            th 타입
-                            th 클라이언트 비밀키
-                        for domain in user.domains
-                            tr
-                                td= domain.host
-                                td= domain.type
-                                td= domain.clientSecret
+                            td= domain.host
+                            td= domain.type
+                            td= domain.clientSecret
             else
                 form#login-form(action='/auth/login' method='post')
-                    h2 NodeBird 계정으로 로그인하세요div
+                    h2 NodeBird 계정으로 로그인하세요
                     .input-group
                         label(for='email') 이메일
                         input#email(type='email' name='email' required autofocus)
