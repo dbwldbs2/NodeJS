@@ -8,7 +8,6 @@ const router = express.Router();
 
 router.post('/token', async (req, res) => {
     const {clientSecret} = req.body;
-    
     try {
         const domain = await Domain.findOne({
             where: {clientSecret},
@@ -47,7 +46,7 @@ router.post('/token', async (req, res) => {
     }
 });
 
-router.get('./test', verifyToken, (req, res) => {
+router.get('/test', verifyToken, (req, res) => {
     res.json(req.decoded);
 });
 
