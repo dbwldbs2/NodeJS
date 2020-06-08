@@ -23,7 +23,7 @@ block content
     .error-message= error
     a(href='./room') 채팅방 설정
     
-    script(src='/socket.io'/socket.io.js);
+    script(src='/socket.io/socket.io.js')
     script.
         var socket = io.connect('http://localhost:8005/room', {
             path: '/socket.io'
